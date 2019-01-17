@@ -1,0 +1,28 @@
+{
+  "name": "v-chat-server",
+  "version": "1.0.0",
+  "description": "V-Chat Server Application",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/ts-node ./src/index.ts",
+    "build": "tsc"
+  },
+  "author": "Ashish Patel",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "lodash": "^4.17.11",
+    "socket.io": "^2.2.0",
+    "ws": "^6.1.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/lodash": "^4.14.119",
+    "@types/node": "^10.12.18",
+    "@types/socket.io": "^2.1.2",
+    "@types/ws": "^6.0.1",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  }
+}
