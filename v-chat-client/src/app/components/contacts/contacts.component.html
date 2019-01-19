@@ -1,3 +1,13 @@
-<p>
-  contacts works!
-</p>
+<mat-nav-list>
+  <ng-container  *ngFor="let user of availableUsers">
+    <mat-list-item>
+      <mat-icon mat-list-icon>account_circle</mat-icon>
+      <h4 mat-line>{{user.name}}</h4>
+      <p mat-line> {{user.status}} </p>
+      <button mat-raised-button (click)="onStartChat()">
+          Start Chat
+       </button>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </ng-container>
+</mat-nav-list>

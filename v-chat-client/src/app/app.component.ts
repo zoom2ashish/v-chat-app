@@ -13,19 +13,13 @@ export class AppComponent {
   public messages: string[] = [];
 
   constructor(private socketService: SocketService) {
-    this.socketService.initSocket();
+    // this.socketService.initSocket();
 
-    this.socketService.onMessage().subscribe((msg) => {
-      this.messages.push(msg.content);
-    });
+    // this.socketService.onMessage().subscribe((msg) => {
+    //   this.messages.push(msg.content);
+    // });
   }
 
   onSend(msg: string) {
-    if (msg) {
-      this.socketService.send({
-        from: { name: 'Ashish' },
-        content: msg
-      });
-    }
   }
 }

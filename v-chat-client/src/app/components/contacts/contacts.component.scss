@@ -1,0 +1,17 @@
+:host {
+  mat-card {
+    margin-top: 16px;
+  }
+}
+
+.circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 50px;
+  // color: #fff;
+  line-height: 500px;
+  text-align: center;
+  background: #000;
+  opacity: 0.25;
+}

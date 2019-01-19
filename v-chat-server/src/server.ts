@@ -1,9 +1,10 @@
 import { createServer, Server } from 'http';
 import express from 'express';
 import socketIo from 'socket.io';
-
-import { Message, User } from './model/chat.model';
 import { ListenOptions } from 'net';
+import userStore from './stores/users.store';
+import { User } from './model/user.model';
+import uuidv1 from 'uuid/v1';
 
 export class ChatServer {
   public static readonly PORT = 8080;
@@ -45,14 +46,8 @@ export class ChatServer {
       this._io.on('connection', (socket: socketIo.Socket) => {
         console.log('Connected client on %s', this._port);
 
-        socket.on('message', (m: Message) => {
-          console.log('[server][message]: %s', JSON.stringify(m));
-          this._io.emit('message', m);
-        });
-
-        socket.on('disconnect', () => {
-          console.log('Client disconnected');
-        });
+        socket.on('register', (userData: any) => this.handleRegistation(socket, userData));
+        socket.on('disconnect', () => this.handleDisconnect(socket));
       });
     });
   }
@@ -61,4 +56,31 @@ export class ChatServer {
     return this._app;
   }
 
+  private handleRegistation(client: socketIo.Socket, data: User) {
+    console.log('Registration Complete')
+    const registeredUser = userStore.register(client.id, data);
+    client.emit('register_complete', registeredUser);
+    this.notifyUserLogIn(data);
+    this.notifyAvailableUsers();
+
+  }
+
+  private handleDisconnect(client: socketIo.Socket) {
+    userStore.unregister(client.id);
+    this.notifyAvailableUsers();
+  }
+
+  private notifyUserLogIn(userData: User) {
+    const timestamp = (new Date()).getTime();
+    this._io.emit('notification', {
+      id: uuidv1(),
+      type: 'UserLogIn',
+      timestamp: timestamp,
+      content: `${userData.name} logged in`
+    });
+  }
+
+  private notifyAvailableUsers() {
+    this._io.sockets.emit('available_users', userStore.getAvailableUsers());
+  }
 }

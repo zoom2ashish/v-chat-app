@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Who are you?</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form *ngIf="!isLoading" #registrationForm="ngForm" (submit)="onRegister(registrationForm)">
+      <mat-form-field class="example-full-width">
+        <input matInput type="text" placeholder="Name"
+          aria-required="true" minlength="3"
+          ngModel name="name" #nameInput="ngModel" required>
+        <mat-error *ngIf="nameInput.invalid">Please enter a valid name</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput type="text" placeholder="What's in your mind today?"
+          aria-required="false" maxlength="30"
+          ngModel name="status" #statusInput="ngModel">
+        <mat-error *ngIf="statusInput.invalid">Status cannot be longer than 20 characters</mat-error>
+      </mat-form-field>
+
+       <button mat-raised-button type="submit" *ngIf="!isLoading" class="mat-accent">Register</button>
+    </form>
+  </mat-card-content>
+
+</mat-card>
